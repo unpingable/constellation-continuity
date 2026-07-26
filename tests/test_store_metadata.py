@@ -6,6 +6,8 @@ from pathlib import Path
 
 from continuity.store.sqlite import SQLiteStore
 
+from gitfix import make_gitdir
+
 
 def test_metadata_populated_on_init(tmp_path: Path) -> None:
     db = tmp_path / "fresh.db"
@@ -38,7 +40,7 @@ def test_metadata_idempotent(tmp_path: Path) -> None:
 def test_metadata_includes_git_root_when_in_repo(tmp_path: Path) -> None:
     repo = tmp_path / "myrepo"
     repo.mkdir()
-    (repo / ".git").mkdir()
+    make_gitdir(repo)
     (repo / ".continuity").mkdir()
     db = repo / ".continuity" / "db.sqlite"
 

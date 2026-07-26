@@ -8,6 +8,8 @@ from unittest.mock import patch
 
 import pytest
 
+from gitfix import make_gitdir
+
 from continuity.util import dbpath
 from continuity.util.dbpath import (
     list_workspaces,
@@ -138,7 +140,7 @@ def test_workspace_loses_to_env_db(workspaces_root: Path) -> None:
 def test_workspace_beats_git_root(workspaces_root: Path, tmp_path: Path) -> None:
     repo = tmp_path / "myproj"
     repo.mkdir()
-    (repo / ".git").mkdir()
+    make_gitdir(repo)
 
     db, source = resolve_db_path(workspace="obs", env={}, cwd=repo)
     assert source == "workspace"

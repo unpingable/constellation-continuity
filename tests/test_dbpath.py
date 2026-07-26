@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from gitfix import make_gitdir
+
 from continuity.util.dbpath import (
     GLOBAL_DB_PATH,
     PROJECT_DB_RELATIVE,
@@ -20,8 +22,8 @@ def test_explicit_path_wins(tmp_path: Path) -> None:
 
 
 def test_env_var_wins_over_git_root(tmp_path: Path) -> None:
-    # Set up a fake git repo
-    (tmp_path / ".git").mkdir()
+    # Set up a shape-valid fake git repo
+    make_gitdir(tmp_path)
     env_db = tmp_path / "from-env.db"
     db, source = resolve_db_path(
         env={"CONTINUITY_DB_PATH": str(env_db)},
@@ -34,7 +36,7 @@ def test_env_var_wins_over_git_root(tmp_path: Path) -> None:
 def test_git_root_resolution(tmp_path: Path) -> None:
     repo = tmp_path / "myproject"
     repo.mkdir()
-    (repo / ".git").mkdir()
+    make_gitdir(repo)
     sub = repo / "src" / "deep"
     sub.mkdir(parents=True)
 
@@ -51,18 +53,31 @@ def test_global_fallback_when_not_in_repo(tmp_path: Path) -> None:
 
 
 def test_find_git_root_with_dir(tmp_path: Path) -> None:
-    (tmp_path / ".git").mkdir()
+    make_gitdir(tmp_path)
     sub = tmp_path / "a" / "b" / "c"
     sub.mkdir(parents=True)
     assert find_git_root(sub) == tmp_path.resolve()
 
 
 def test_find_git_root_with_file(tmp_path: Path) -> None:
-    """Worktrees have a .git file (not directory) pointing at the gitdir."""
-    (tmp_path / ".git").write_text("gitdir: /elsewhere")
-    sub = tmp_path / "nested"
+    """Worktrees have a .git file (not directory) pointing at the gitdir.
+
+    The pointer must reference a real worktree gitdir — a dangling target
+    is filesystem litter, not a repository (hardening 2026-07-26).
+    """
+    main = tmp_path / "main"
+    main.mkdir()
+    private = make_gitdir(main)
+    wt_gitdir = private / "worktrees" / "wt"
+    wt_gitdir.mkdir(parents=True)
+    (wt_gitdir / "HEAD").write_text("ref: refs/heads/main\n")
+    (wt_gitdir / "commondir").write_text("../..\n")
+    wt = tmp_path / "wt"
+    wt.mkdir()
+    (wt / ".git").write_text(f"gitdir: {wt_gitdir}\n")
+    sub = wt / "nested"
     sub.mkdir()
-    assert find_git_root(sub) == tmp_path.resolve()
+    assert find_git_root(sub) == wt.resolve()
 
 
 def test_find_git_root_returns_none_outside_repo(tmp_path: Path) -> None:
