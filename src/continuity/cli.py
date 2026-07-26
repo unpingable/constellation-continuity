@@ -992,6 +992,41 @@ def cmd_export(args: argparse.Namespace) -> None:
         )
 
 
+def cmd_rely_export(args: argparse.Namespace) -> None:
+    """Emit a continuity.rely_export.v0: one memory's rely verdict at one
+    explicit evaluation time, as machine JSON on stdout (nothing else).
+
+    A rely refusal is a valid export — refusal is evidence, not silence — so
+    the exit code is 0 whenever a record was produced, regardless of the
+    verdict; 1 when no record exists (memory not found, unreadable store,
+    incomplete response). Determinism: export_id excludes exported_at, so the
+    same store state at the same --evaluation-time yields the same export_id.
+    """
+    from continuity.rely_export import build_rely_export
+    from continuity.util.clock import isoformat_now
+
+    import sqlite3
+
+    evaluation_time = _parse_cli_evaluation_time(args.evaluation_time)
+    try:
+        store = _get_store(args)
+        resp = store.explain_memory(args.memory_id, evaluation_time=evaluation_time)
+        metadata = store.get_store_metadata()
+    except sqlite3.DatabaseError as exc:
+        # Typed inability: an unreadable store yields no record at all
+        # (exit 1 via the ValueError handler), never a partial export.
+        raise ValueError(f"store is not readable: {exc}") from exc
+    export = build_rely_export(
+        resp,
+        metadata,
+        exported_at=isoformat_now(),
+        exporter=ExportSource(
+            version=_continuity_version(), repo=args.repo, commit=args.commit,
+        ),
+    )
+    print(json.dumps(export.canonical_dict(), indent=2, default=str))
+
+
 def cmd_stats(args: argparse.Namespace) -> None:
     store = _get_store(args)
     with store._connect() as conn:
@@ -1532,6 +1567,30 @@ def build_parser() -> argparse.ArgumentParser:
         "--commit", default=None, help="optional export provenance: source commit",
     )
 
+    # rely-export — one memory's rely verdict as continuity.rely_export.v0
+    p_rely_exp = sub.add_parser(
+        "rely-export",
+        help=(
+            "emit a continuity.rely_export.v0: one memory's rely verdict at an "
+            "explicit evaluation time, as machine JSON. A refusal is a valid "
+            "export; nothing here is an NQ verdict or execution authority."
+        ),
+    )
+    p_rely_exp.add_argument("memory_id")
+    p_rely_exp.add_argument(
+        "--evaluation-time", default=None,
+        help=(
+            "ISO-8601 timestamp the rely gate is evaluated at (the snapshot "
+            "axis, recorded in the export). Defaults to current wall clock."
+        ),
+    )
+    p_rely_exp.add_argument(
+        "--repo", default=None, help="optional export provenance: source repo",
+    )
+    p_rely_exp.add_argument(
+        "--commit", default=None, help="optional export provenance: source commit",
+    )
+
     # stats
     sub.add_parser("stats", help="show database statistics")
 
@@ -1596,6 +1655,7 @@ COMMANDS = {
     "latest": cmd_latest,
     "case": cmd_case,
     "export": cmd_export,
+    "rely-export": cmd_rely_export,
     "stats": cmd_stats,
     "doctor": cmd_doctor,
 }
