@@ -1,5 +1,21 @@
 # continuity
 
+> **Status (2026-07-26): the Continuity / persistence-custody office —
+> separately instantiated, not part of the current operational vertical.**
+> This repository owns the jurisdiction "may this recorded thing still be
+> relied on now, given its provenance and premises?" — governed persistence
+> with observe/commit/rely, authoring-tier caps, and a premise graph. It was
+> **not absorbed** by NQ's consumer-indexed reliance: the two `rely` verbs
+> govern different subjects (NQ: external evidence claims; Continuity: its
+> own persisted memories), NQ's freshness is evidence-local, and Continuity's
+> reserved NQ witness edge remains unbuilt. Wired consumers today: AG
+> classic's read-only doctrine consultation (the constellation's first
+> cross-system edge) and Claude sessions via MCP; Nightshift has named
+> Continuity as its persistence surface (forcing case fired, not yet wired).
+> The trajectory/world-line face (MapSkew) is candidate doctrine,
+> uninstantiated — today no office answers "does the surrounding trajectory
+> still permit reliance?". New features on its own roadmap remain welcome.
+
 Claude forgot what you decided last week. Again.
 
 You told it the auth migration was blocked on legal review. You told it the config format changed. You told it not to touch the billing module until after the freeze. It nodded, it complied, and then the session ended. Next session, it had no idea. So you told it again. And again. And you started to wonder whether "memory" means anything if nothing stops stale memory from driving action.
