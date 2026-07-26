@@ -15,6 +15,16 @@
 > The trajectory/world-line face (MapSkew) is candidate doctrine,
 > uninstantiated — today no office answers "does the surrounding trajectory
 > still permit reliance?". New features on its own roadmap remain welcome.
+>
+> **Seam update (2026-07-26): the Continuity → NQ testimony seam is
+> implemented.** `contctl rely-export` emits `continuity.rely_export.v0`
+> (see [`docs/RELY_EXPORT_V0.md`](docs/RELY_EXPORT_V0.md)) — a per-memory
+> rely snapshot at an explicit evaluation time, with golden vectors under
+> `tests/fixtures/rely_export_vectors/`. NQ imports it as an external
+> projection, evaluates a narrow `continuity_rely_eligible` claim, and may
+> require it as supporting evidence in consumer reliance. Continuity still
+> emits no NQ verdict and no authority; snapshots are immutable and later
+> evaluations supersede without rewriting.
 
 Claude forgot what you decided last week. Again.
 
