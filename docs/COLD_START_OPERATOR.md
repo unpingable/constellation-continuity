@@ -162,7 +162,11 @@ supporting-subject fence, reliance, or disposition semantics.
 
 ## Record later continuity loss
 
-Revoke the same memory and export a later snapshot:
+First establish through the repository owner or another authorized observer
+that the named ref no longer incorporates the bound result commit. Continuity
+does not inspect Git and must not manufacture that observation from its own
+database. Once that external fact has actually changed, revoke the same memory
+and export a later snapshot:
 
 ```bash
 "$CONTINUITY_CLI" --db "$CONTINUITY_STATE_DB" \
