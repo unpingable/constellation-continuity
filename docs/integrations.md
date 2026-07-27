@@ -19,12 +19,18 @@ All three talk to the same on-disk SQLite stores. They share schema, receipt cha
 Continuity resolves a store path in this order (first match wins):
 
 1. `--db PATH` on the CLI, or explicit path passed to `SQLiteStore(path)`
-2. `CONTINUITY_DB` environment variable
-3. Per-project default (derived from `cwd` / git root)
-4. Workspace default (if the working dir is in a registered workspace)
-5. Global default (`~/.local/share/continuity/global.db` or platform equivalent)
+2. `CONTINUITY_DB_PATH` environment variable
+3. Explicit workspace selection (`--workspace` or `CONTINUITY_WORKSPACE`)
+4. Per-project default (derived from `cwd` / Git root)
+5. Global default (`~/.local/share/continuity/continuity.db`)
 
 `contctl where` prints which path and source resolver would be used from the current directory. Start there when unsure.
+
+For cold-start tests and scripted operator specimens, prefer an explicit
+`--db PATH` on every invocation. It wins over ambient configuration and avoids
+the Git-root and user-home fallbacks. See
+[`COLD_START_OPERATOR.md`](COLD_START_OPERATOR.md) for a source install and
+empty-state sequence.
 
 ## MCP server
 

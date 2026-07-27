@@ -7,7 +7,7 @@
 
 ## The Problem
 
-Continuity's store resolver falls back through a priority list (`--db` → `CONTINUITY_DB` env → per-project default → workspace default → global default). The fallback is silent: if no workspace or explicit path is set, resolution lands in `<git-root>/.continuity/db.sqlite` with no indication that this may not be the DB other constellation agents are reading.
+Continuity's store resolver falls back through a priority list (`--db` → `CONTINUITY_DB_PATH` env → explicit workspace selection → per-project default → global default). The fallback is silent: if no workspace or explicit path is set, resolution lands in `<git-root>/.continuity/db.sqlite` with no indication that this may not be the DB other constellation agents are reading.
 
 A `global`-scoped memory written to an *undeclared* isolated project-local DB is **not** global. It is a local memory wearing a fake mustache. The scope field on the memory object advertises cross-project intent; the storage topology contradicts it. Nothing in the system makes that contradiction visible.
 

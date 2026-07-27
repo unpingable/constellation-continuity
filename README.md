@@ -1,30 +1,24 @@
 # continuity
 
-> **Status (2026-07-26): the Continuity / persistence-custody office —
-> separately instantiated, not part of the current operational vertical.**
-> This repository owns the jurisdiction "may this recorded thing still be
-> relied on now, given its provenance and premises?" — governed persistence
-> with observe/commit/rely, authoring-tier caps, and a premise graph. It was
-> **not absorbed** by NQ's consumer-indexed reliance: the two `rely` verbs
-> govern different subjects (NQ: external evidence claims; Continuity: its
-> own persisted memories), NQ's freshness is evidence-local, and Continuity's
-> reserved NQ witness edge remains unbuilt. Wired consumers today: AG
-> classic's read-only doctrine consultation (the constellation's first
-> cross-system edge) and Claude sessions via MCP; Nightshift has named
-> Continuity as its persistence surface (forcing case fired, not yet wired).
-> The trajectory/world-line face (MapSkew) is candidate doctrine,
-> uninstantiated — today no office answers "does the surrounding trajectory
-> still permit reliance?". New features on its own roadmap remain welcome.
+> **Status (2026-07-27): Continuity is a separately instantiated
+> persistence-custody office and a supported participant in the
+> Docket-primary, continuity-aware Nightshift vertical.** Docket supplies the
+> complete `gwr:ref-continuity:v0` subject and its opaque repository identity;
+> Continuity binds that subject as an ordinary observation, applies its
+> existing commit/revoke/rely lifecycle, and emits
+> `continuity.rely_export.v0`. NQ imports that export as external supporting
+> testimony and remains the sole owner of its supporting-subject fence,
+> reliance, and disposition semantics. Nightshift consumes NQ's disposition;
+> Continuity does not emit a Nightshift result, an NQ verdict, or execution
+> authority. See
+> [`docs/REF_CONTINUITY_SUBJECT_V0.md`](docs/REF_CONTINUITY_SUBJECT_V0.md) and
+> [`docs/RELY_EXPORT_V0.md`](docs/RELY_EXPORT_V0.md).
 >
-> **Seam update (2026-07-26): the Continuity → NQ testimony seam is
-> implemented.** `contctl rely-export` emits `continuity.rely_export.v0`
-> (see [`docs/RELY_EXPORT_V0.md`](docs/RELY_EXPORT_V0.md)) — a per-memory
-> rely snapshot at an explicit evaluation time, with golden vectors under
-> `tests/fixtures/rely_export_vectors/`. NQ imports it as an external
-> projection, evaluates a narrow `continuity_rely_eligible` claim, and may
-> require it as supporting evidence in consumer reliance. Continuity still
-> emits no NQ verdict and no authority; snapshots are immutable and later
-> evaluations supersede without rewriting.
+> The two `rely` verbs still govern different subjects: NQ evaluates external
+> evidence claims, while Continuity evaluates its own persisted memories at an
+> explicit time. Existing consumers also include AG classic's read-only
+> doctrine consultation and Claude sessions via MCP. The trajectory/world-line
+> face (MapSkew) remains candidate doctrine and is not part of this seam.
 
 Claude forgot what you decided last week. Again.
 
@@ -96,11 +90,15 @@ The storage is boring local SQLite. Three layers: objects (current state), event
 **Install and run the tests:**
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-pytest
+python3 -m venv .venv
+.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pytest
 ```
+
+This is a source install; it does not assume that `contctl` was already on the
+operator's `PATH`. For a fresh-state installation and an explicit-database
+operator journey, follow
+[`docs/COLD_START_OPERATOR.md`](docs/COLD_START_OPERATOR.md).
 
 **Try the MCP server** (if you use Claude Code):
 
