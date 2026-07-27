@@ -53,6 +53,13 @@ from continuity.doctor import (
     check_premise_consistency,
 )
 from continuity.receipts.memory_receipts import format_receipt
+from continuity.ref_continuity import (
+    DocketProvenance,
+    REF_CONTINUITY_CONTRACT,
+    RefContinuityObservationRequest,
+    RepositoryId,
+    observe_ref_continuity,
+)
 from continuity.store.sqlite import (
     ContentHashMismatchError,
     InvalidTransitionError,
@@ -429,6 +436,45 @@ def cmd_observe(args: argparse.Namespace) -> None:
             "receipt_id": resp.receipt.receipt_id,
             "receipt_hash": resp.receipt.hash,
         })
+
+
+def cmd_observe_ref_continuity(args: argparse.Namespace) -> None:
+    """Bind a Docket-supplied ref-continuity subject as an observation."""
+
+    store = _get_store(args)
+    actor = None
+    if args.actor:
+        actor = ActorRef(principal_id=args.actor, auth_method="cli")
+
+    request = RefContinuityObservationRequest(
+        subject=args.subject,
+        repository_id=RepositoryId(args.repository_id),
+        target_ref=args.target_ref,
+        result_commit=args.result_commit,
+        docket=DocketProvenance(
+            attempt_id=args.docket_attempt,
+            dossier_version=args.dossier_version,
+            prepared_attempt_digest=args.prepared_attempt_digest,
+            dossier_format=args.dossier_format,
+        ),
+        actor=actor,
+        source_observed_at=_parse_cli_evaluation_time(args.source_observed_at),
+        idempotency_key=args.idempotency_key,
+    )
+    result = observe_ref_continuity(store, request)
+    memory = result.observation.memory
+    receipt = result.observation.receipt
+    _out({
+        "subject_contract": REF_CONTINUITY_CONTRACT,
+        **result.binding.as_dict(),
+        "docket_provenance": result.docket.as_dict(),
+        "memory_id": memory.memory_id,
+        "status": memory.status,
+        "reliance_class": memory.reliance_class,
+        "authoring_tier": memory.authoring_tier,
+        "receipt_id": receipt.receipt_id,
+        "receipt_hash": receipt.hash,
+    })
 
 
 def cmd_commit(args: argparse.Namespace) -> None:
@@ -1325,6 +1371,70 @@ def build_parser() -> argparse.ArgumentParser:
     p_obs.add_argument("--receipt", action="store_true", help="output full receipt")
     p_obs.add_argument("-q", "--quiet", action="store_true", help="output only memory_id")
 
+    # observe-ref-continuity — exact Docket-owned logical subject binding
+    p_ref_obs = sub.add_parser(
+        "observe-ref-continuity",
+        help=(
+            "record a Docket-supplied gwr:ref-continuity:v0 subject as an "
+            "ordinary observed memory (never derives repository identity, "
+            "inspects Git, or auto-commits)"
+        ),
+    )
+    p_ref_obs.add_argument(
+        "--subject",
+        required=True,
+        help=(
+            "complete supplied subject: "
+            "gwr:ref-continuity:v0:<repository_id>#<target_ref>@<result_commit>"
+        ),
+    )
+    p_ref_obs.add_argument(
+        "--repository-id",
+        required=True,
+        help="opaque Docket RepositoryId (repo- plus 32 lowercase hex characters)",
+    )
+    p_ref_obs.add_argument(
+        "--target-ref",
+        required=True,
+        help="exact fully qualified target ref (for example refs/gwr/target)",
+    )
+    p_ref_obs.add_argument(
+        "--result-commit",
+        required=True,
+        help="exact full 40- or 64-character lowercase hexadecimal commit id",
+    )
+    p_ref_obs.add_argument(
+        "--docket-attempt",
+        required=True,
+        help="opaque Docket attempt identity carried as provenance",
+    )
+    p_ref_obs.add_argument(
+        "--dossier-version",
+        required=True,
+        type=int,
+        help="non-negative Docket dossier version carried as provenance",
+    )
+    p_ref_obs.add_argument(
+        "--prepared-attempt-digest",
+        required=True,
+        help="exact 64-character lowercase hexadecimal prepared-attempt digest",
+    )
+    p_ref_obs.add_argument(
+        "--dossier-format",
+        default="gwr:attempt-dossier:v3",
+        help="Docket dossier format (default: gwr:attempt-dossier:v3)",
+    )
+    p_ref_obs.add_argument(
+        "--source-observed-at",
+        default=None,
+        help=(
+            "optional ISO-8601 time the source binding was observed; distinct "
+            "from when Continuity records it"
+        ),
+    )
+    p_ref_obs.add_argument("--actor", help="principal_id for the recording actor")
+    p_ref_obs.add_argument("--idempotency-key", default=None)
+
     # commit
     p_cmt = sub.add_parser("commit", help="commit an observed memory")
     p_cmt.add_argument("memory_id", nargs="?", default=None)
@@ -1642,6 +1752,7 @@ COMMANDS = {
     "where": cmd_where,
     "workspace": cmd_workspace,
     "observe": cmd_observe,
+    "observe-ref-continuity": cmd_observe_ref_continuity,
     "commit": cmd_commit,
     "revoke": cmd_revoke,
     "adjudicate": cmd_adjudicate,

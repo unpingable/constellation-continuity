@@ -101,6 +101,13 @@ contctl case SCOPE                              # case bundle for a scope
 contctl repair MEMORY_ID --reason "..." --content '{...}'  # narrow content fix
 contctl import --from PATH --memory-id MID               # cross-DB pinned import
 contctl reliance verify RECEIPT.json                     # verify relied_on array
+
+# Docket supplies the complete logical subject and exact components; this
+# creates only an observed memory. See REF_CONTINUITY_SUBJECT_V0.md.
+contctl observe-ref-continuity --subject SUBJECT \
+    --repository-id REPOSITORY_ID --target-ref REF --result-commit COMMIT \
+    --docket-attempt ATTEMPT --dossier-version N \
+    --prepared-attempt-digest DIGEST
 ```
 
 `--allow-island` is a global flag that opts into cross-project-shaped writes (scope=global / scope=workspace*) against a project-local store. Without it, such writes refuse — see [`gaps/ISLANDS_OF_CONTINUITY.md`](gaps/ISLANDS_OF_CONTINUITY.md).
@@ -154,6 +161,7 @@ resp = store.observe_memory(req)
 | [`continuity.store.sqlite`](../src/continuity/store/sqlite.py) | `SQLiteStore` — observe, commit, revoke, query, explain, case bundle |
 | [`continuity.api.models`](../src/continuity/api/models.py) | Pydantic request/response types, enums, `PremiseRef`, `MemoryLink` |
 | [`continuity.memory.policy`](../src/continuity/memory/policy.py) | `MemoryPolicy` — the Governor seam for reliance-class gating |
+| [`continuity.ref_continuity`](../src/continuity/ref_continuity.py) | Pure Docket ref-continuity subject binding + thin ordinary-observe adapter; see [`REF_CONTINUITY_SUBJECT_V0.md`](REF_CONTINUITY_SUBJECT_V0.md) |
 | [`continuity.util`](../src/continuity/util/) | `clock.utcnow()`, `jsoncanon.canonical_json()`, `ids.new_id()`, hashing |
 
 ### When to use the library
