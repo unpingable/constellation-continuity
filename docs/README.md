@@ -19,6 +19,7 @@ A map of this directory. Start from the top if you're new.
 | [`integrations.md`](integrations.md) | MCP server, `contctl` CLI, and Python library — each as a reference, with minimal examples and entry points |
 | [`scoping.md`](scoping.md) | Workflow discipline: choosing between repo docs / Claude memory / continuity; selecting scope, kind, basis, reliance class; anti-patterns and new-repo bootstrap |
 | [`COLD_START_OPERATOR.md`](COLD_START_OPERATOR.md) | Fresh source install, explicit empty state, and the supported Docket subject → commit → rely-export → revoke journey |
+| [`SESSION-LIFECYCLE-HOWTO.md`](SESSION-LIFECYCLE-HOWTO.md) | Explicit-store inspect, query-then-supersede, refresh-recording, closeout, and the current session-hook boundary |
 | [`REF_CONTINUITY_SUBJECT_V0.md`](REF_CONTINUITY_SUBJECT_V0.md) | Supported Docket-owned repository/ref/commit subject binding; exact CLI/library contract and nonclaims |
 | [`RELY_EXPORT_V0.md`](RELY_EXPORT_V0.md) | Machine-facing, evaluation-time-relative Continuity testimony consumed by NQ as an external projection |
 | [`gaps/`](gaps/) | Gap specs: proposed doctrine for load-bearing architectural or storage shifts, before implementation |
