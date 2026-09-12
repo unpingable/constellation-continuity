@@ -1,5 +1,11 @@
 # continuity
 
+Public repository name: **Constellation Continuity** (`constellation-continuity`).
+The Python distribution and commands remain `continuity`, `contctl`, and
+`continuity-mcp`; repository publication does not rename installed or serialized
+interfaces. For the smallest supported local journey, see [HOWTO.md](HOWTO.md).
+Public source: <https://github.com/unpingable/constellation-continuity>.
+
 > **Status (2026-07-27): Continuity is a separately instantiated
 > persistence-custody office and a supported participant in the
 > Docket-primary, continuity-aware Nightshift vertical.** Docket supplies the

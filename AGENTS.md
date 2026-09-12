@@ -16,6 +16,21 @@ pip install -e ".[dev]"
 pytest
 ```
 
+For public documentation, call the repository **Constellation Continuity** and
+link `https://github.com/unpingable/constellation-continuity`. Keep the existing
+Python package, command, schema, and protocol names unchanged. Do not imply that
+storage, retrieval, or a receipt establishes truth or external authority.
+
+Before campaign work, identify the selected campaign, exact source revision,
+working directory, output locations, and owning authority boundary. A plan,
+receipt, or passing test does not authorize external effects. For a prolonged
+run, use the campaign-approved durable producer and persist an inspection and
+resume checkpoint before waiting. A fresh supervisor must inspect the original
+producer and evidence and resume it when possible; never restart or replace it
+merely because supervision was interrupted. If no approved durable mechanism
+exists, stop before launch and record that limitation rather than implying the
+run can survive supervisor loss.
+
 ## Tests
 
 ```bash

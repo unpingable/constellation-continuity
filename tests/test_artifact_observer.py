@@ -139,7 +139,10 @@ def test_dogfood_observe_continuity_repo() -> None:
     )
     assert o.can_testify is True
     assert o.claim_value == "true"
-    assert o.source_ref.repo == "continuity"
+    # ArtifactObserver reports the actual repository-directory basename. The
+    # approved public relocation changed that basename only; package and
+    # protocol identities remain continuity.
+    assert o.source_ref.repo == "constellation-continuity"
     assert o.source_ref.content_digest is not None
     # digest is reproducible: a second scan of the unchanged file matches.
     again = observer.observe(
