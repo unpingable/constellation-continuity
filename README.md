@@ -22,9 +22,11 @@ Public source: <https://github.com/unpingable/constellation-continuity>.
 >
 > The two `rely` verbs still govern different subjects: NQ evaluates external
 > evidence claims, while Continuity evaluates its own persisted memories at an
-> explicit time. Existing consumers also include AG classic's read-only
-> doctrine consultation and Claude sessions via MCP. The trajectory/world-line
-> face (MapSkew) remains candidate doctrine and is not part of this seam.
+> explicit time. AG classic's read-only doctrine consultation is a current
+> consumer. Continuity also provides an MCP server intended for Claude Code
+> sessions; its qualified compatibility boundary is documented in
+> [`docs/integrations.md`](docs/integrations.md). The trajectory/world-line face
+> (MapSkew) remains candidate doctrine and is not part of this seam.
 
 Claude forgot what you decided last week. Again.
 
@@ -149,9 +151,11 @@ Built on patterns the internet already learned: append-only logs, maildir-style 
 
 ## Adopters
 
-Claude Code is one adopter — the one this README opens with — but the substrate is multi-adopter at code depth. The three verbs, hash-chained receipts, premise graph, and reliance verification are adopter-agnostic. Other adopters consume the same primitives via the Python library or `contctl` CLI without going through MCP.
-
-In development: the **WLP persistence adapter** (see [`docs/gaps/WLP_PERSISTENCE_ADAPTER_GAP.md`](docs/gaps/WLP_PERSISTENCE_ADAPTER_GAP.md)) — a custody-preserving persistence substrate for WLP-serialized receipts. The shape is exactly what the receipt-keeping primitives were built for, used by a non-Claude consumer.
+Claude Code is the intended MCP adopter — the one this README opens with — but
+the substrate is multi-adopter at code depth. The three verbs, hash-chained
+receipts, premise graph, and reliance verification are adopter-agnostic. Other
+adopters consume the same primitives via the Python library or `contctl` CLI
+without going through MCP.
 
 The discipline that lets this work: **persistence ≠ transport.** Continuity stores, indexes, retrieves, and preserves custody. It does not route, validate, deliver, propagate revocations, or decide reliance. Adopters bring their own validation, routing, and reliance logic — Continuity is the receipt store, not the reliance engine.
 

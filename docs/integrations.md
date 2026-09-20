@@ -6,13 +6,13 @@ How to talk to continuity. Three modes, one model. The vocabulary and invariants
 
 | Mode | For | Process shape | Entry point |
 |------|-----|---------------|-------------|
-| **MCP server** | Claude Code / other MCP clients calling memory tools during a session | stdio subprocess, JSON-RPC | `continuity-mcp` (installed with the package) |
+| **MCP server** | Claude Code sessions calling memory tools during a session | stdio subprocess, JSON-RPC | `continuity-mcp` (installed with the package) |
 | **CLI (`contctl`)** | Humans, shell scripts, CI jobs, ad-hoc inspection | short-lived invocation | `contctl <command>` |
 | **Python library** | In-process integration, custom tooling, test harnesses | direct import | `from continuity.store.sqlite import SQLiteStore` |
 
 All three talk to the same on-disk SQLite stores. They share schema, receipt chains, and explain semantics. Choose the one that fits the process shape — the data is the same.
 
-**Adopter classes.** The MCP path is for Claude Code sessions; the library and CLI paths are adopter-agnostic. Non-Claude adopters (e.g., the WLP persistence adapter at [`gaps/WLP_PERSISTENCE_ADAPTER_GAP.md`](gaps/WLP_PERSISTENCE_ADAPTER_GAP.md)) integrate via the library or CLI without involving MCP. The substrate (verbs, schema, receipts, premise graph, rely check) is the same for all adopter classes. The discipline that holds across adopters: **persistence ≠ transport; receipt store ≠ reliance engine.** Continuity does not route, validate, propagate revocations, or decide reliance — adopters bring those.
+**Adopter classes.** The MCP path is for Claude Code sessions; the library and CLI paths are adopter-agnostic. Non-Claude adopters integrate via the library or CLI without involving MCP. The substrate (verbs, schema, receipts, premise graph, rely check) is the same for all adopter classes. The discipline that holds across adopters: **persistence ≠ transport; receipt store ≠ reliance engine.** Continuity does not route, validate, propagate revocations, or decide reliance — adopters bring those.
 
 ## Store location
 
@@ -35,6 +35,12 @@ empty-state sequence.
 ## MCP server
 
 The MCP server exposes continuity as tools a Claude Code session can call directly. It runs as a stdio subprocess over JSON-RPC; nothing network-facing.
+
+**Compatibility boundary.** `continuity-mcp` is an in-tree JSON-RPC/stdio
+implementation. Its initialization path recognizes MCP protocol versions
+`2025-03-26` and `2024-11-05`. The subprocess-level test exercises initialization
+and `tools/list` for those two versions. Broader client or protocol-version
+compatibility is not claimed.
 
 ### Installation
 

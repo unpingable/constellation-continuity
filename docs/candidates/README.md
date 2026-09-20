@@ -44,4 +44,4 @@ Keep them short. A candidate that needs the full gap-spec structure is probably 
 
 | Note | Graduated | Now at |
 |------|-----------|--------|
-| WLP Persistence Adapter | 2026-05-28 | [`../gaps/WLP_PERSISTENCE_ADAPTER_GAP.md`](../gaps/WLP_PERSISTENCE_ADAPTER_GAP.md) — graduated under MVP-A forcing pressure; all four graduation triggers MET. |
+| WLP Persistence Adapter | 2026-05-28 | [`../gaps/WLP_PERSISTENCE_ADAPTER_GAP.md`](../gaps/WLP_PERSISTENCE_ADAPTER_GAP.md) — **RETIRED 2026-09-20**; no current consumer or compatibility commitment. |

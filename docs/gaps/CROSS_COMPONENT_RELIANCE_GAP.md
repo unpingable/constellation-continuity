@@ -158,7 +158,11 @@ This gap is closed when:
 
 ## Remote-standing composition (trigger note)
 
-If any reliance/import path in this gap (or downstream consumer adoption of `relied_on` receipts) ever becomes **networked, federated, cross-host, or non-filesystem-local**, the cross-constellation remote-standing-boundary doctrine (`~/git/cartography/coordination/nq-REMOTE_STANDING_BOUNDARY.md`) composes here. The required vocabulary then includes `exposure_profile`, standing resolver, action class, receipt-recorded standing basis, and reliance class.
+If any reliance/import path in this gap (or downstream consumer adoption of
+`relied_on` receipts) ever becomes **networked, federated, cross-host, or
+non-filesystem-local**, it requires a separately reviewed remote-standing
+contract. That contract must define the exposure profile, standing resolver,
+action class, receipt-recorded standing basis, and reliance class.
 
 V1 of this gap is explicit that continuity does not become a network oracle (substrate-side V1 is local-only verification). The breadcrumb captures the composition shape so the future gap that introduces a network rely or network import inherits the doctrine, rather than reinventing it. No remote rely or remote import is proposed, planned, or authorized.
 

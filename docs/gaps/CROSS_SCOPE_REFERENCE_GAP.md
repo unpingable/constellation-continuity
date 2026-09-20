@@ -144,7 +144,11 @@ This gap is closed when:
 
 ## Remote-standing composition (trigger note)
 
-If `import_memory` or any related reliance/import path ever becomes **networked, federated, cross-host, or non-filesystem-local**, the cross-constellation remote-standing-boundary doctrine (`~/git/cartography/coordination/nq-REMOTE_STANDING_BOUNDARY.md`) composes here. The required vocabulary then includes `exposure_profile`, standing resolver, action class, receipt-recorded standing basis, and reliance class.
+If `import_memory` or any related reliance/import path ever becomes **networked,
+federated, cross-host, or non-filesystem-local**, it requires a separately
+reviewed remote-standing contract. That contract must define the exposure
+profile, standing resolver, action class, receipt-recorded standing basis, and
+reliance class.
 
 This is a trigger note, not a design. No remote import path is proposed, planned, or authorized. The breadcrumb exists so the future gap that introduces a network surface inherits the doctrine rather than reinventing it.
 

@@ -2,7 +2,7 @@
 
 **Status:** proposed
 **Depends on:** existing memory entries with `[[premise]]`-style links (currently informal in `~/.claude/projects/*/memory/`), planned `continuity doctor` audit harness
-**Related:** `CROSS_ISLAND_BRIDGES_GAP.md` (audited memories may cross island boundaries — bridges deferred), `ISLAND_DISCIPLINE.md`, `~/git/cartography/coordination/SELF-SUBJECT-COLLAPSE.md` (cross-component pattern — the discipline below is continuity's local manifestation)
+**Related:** `CROSS_ISLAND_BRIDGES_GAP.md` (audited memories may cross island boundaries — bridges deferred), `ISLAND_DISCIPLINE.md`
 **Last updated:** 2026-05-28
 
 ## The Problem
@@ -35,7 +35,9 @@ The doctor is audit, not gate. It reports; operators resolve.
 
 ## Self-Subject Collapse discipline
 
-The doctor's subject is continuity. The doctor's actor is also continuity. That makes premise-consistency a standing-prohibition instance of the cross-component pattern named in `~/git/cartography/coordination/SELF-SUBJECT-COLLAPSE.md`: a finding whose subject is the producing component may be reported by that component, but it may not be resolved by it. The continuity-local manifestation:
+The doctor's subject is Continuity. The doctor's actor is also Continuity. A
+finding whose subject is the producing component may be reported by that
+component, but it may not be resolved by it. The Continuity-local rule is:
 
 - **Continuity-as-doctor may report findings about continuity's own substrate or state.** That is the doctor's job.
 - **Continuity-as-doctor may not self-resolve those findings.** No code path inside the doctor produces a verdict that closes, clears, ratifies, or absolves a flag it raised.

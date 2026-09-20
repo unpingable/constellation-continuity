@@ -13,7 +13,14 @@ A `global`-scoped memory written to an *undeclared* isolated project-local DB is
 
 **Isolation is not the bug. *Undeclared* isolation is the bug.** Some continuity domains are isolated on purpose — firewalls between operational continuity and book/manuscript work, quarantines around uncertain-provenance stores, deliberately-local scratch domains. Those are valid. This gap is about the bug class where isolation was created by fallback config drift with no operator intent, and the system continued to accept writes as if the topology were normal.
 
-This bit for real on 2026-04-24. The constellation thesis (scope=global, kind=summary, advisory class) was committed from a Claude Code session inside the continuity repo. Continuity's own `.mcp.json` was on the outlier pattern (`python -m continuity.mcp`, no workspace env) while 10 other repos in the constellation pointed at the shared observatory-family workspace. The thesis landed in `/home/jbeck/git/continuity/.continuity/db.sqlite` — an island — with no warning. The authoritative workspace DB had no record of it. The dogfood moment of "continuity carries doctrine about the constellation it's part of" was, for about 90 minutes, carried by a DB that only continuity itself could see.
+This bit for real on 2026-04-24. The constellation thesis (scope=global,
+kind=summary, advisory class) was committed from a Claude Code session inside
+the Continuity repository. Continuity's own `.mcp.json` was on the outlier
+pattern (`python -m continuity.mcp`, no workspace environment) while other
+repositories pointed at the shared workspace. The thesis landed in the
+repository-local `.continuity/db.sqlite` — an island — with no warning. The
+authoritative workspace database had no record of it. For about 90 minutes, a
+supposedly global record was visible only to Continuity itself.
 
 The bug is obvious in hindsight and invisible until exactly the wrong moment. Classic silent-fallback failure.
 

@@ -17,8 +17,8 @@ hash-chained receipts; `contctl` (init, bootstrap, workspace, observe/commit/rev
 repair, query/latest/get/explain, import, `reliance verify`, case, export, stats,
 `doctor --check premise-consistency`); 12 MCP tools; per-project/workspace/global store
 resolution with island-topology warnings; cross-scope import with pinned premises;
-time-discipline V1 (explicit `evaluation_time`, no ambient clock in the kernel); the
-WLP persistence adapter (library-only); and `continuity.declaration_export.v0`
+time-discipline V1 (explicit `evaluation_time`, no ambient clock in the kernel); and
+`continuity.declaration_export.v0`
 (`docs/DECLARATION_EXPORT_V0.md`).
 
 Who consumes it today:
@@ -27,9 +27,11 @@ Who consumes it today:
   (latest committed doctrine + `rely_ok` captured at consultation time, emitted into an
   observational gate receipt). This is the constellation's first wired cross-system
   edge and it pins a library surface — see `gaps/PINNED_CONSUMER_SURFACE_GAP.md`.
-- **Claude sessions** — the MCP server, across the observatory-family workspace
-  (agent_gov and standing both carry `.mcp.json` wiring).
-- **WLP** — via the persistence adapter (`src/continuity/adapters/wlp.py`).
+
+Configured/intended adopter: **Claude Code sessions** via the MCP server. The
+agent_gov and Standing repositories carry `.mcp.json` wiring, but configuration
+alone is not current-client qualification; see `integrations.md` for the tested
+compatibility boundary.
 
 Who is about to: **Spine Slice 2c** consumes `continuity.declaration_export.v0` through
 a `DeclarationSource`. Spine's 2b fixture predates the export contract; the
@@ -117,8 +119,6 @@ a commitment.
   `lint-promotion`, read-side advisory.
 - **Storage tiering** (`gaps/CONTINUITY_STORAGE_GAP.md`) — hot/warm/cold that stays
   chain-walkable.
-- **WLP RevocationReceipt persistence + any transport surface** — explicitly deferred
-  out of the shipped adapter (`gaps/WLP_PERSISTENCE_ADAPTER_GAP.md`).
 - **`contctl refresh` / `memory_refresh`** — source-reachability checks, deferred from
   `gaps/CROSS_COMPONENT_RELIANCE_GAP.md`.
 - **NQ witness wiring** — `external_witness_ref` stays a reserved column until the NQ
