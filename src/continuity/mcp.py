@@ -1,6 +1,8 @@
 """continuity MCP server — JSON-RPC over stdio.
 
-Exposes continuity as MCP tools for Claude Code and other MCP clients.
+Exposes continuity as MCP tools over the two stdio protocol versions exercised
+by this repository's subprocess compatibility tests. Broader MCP-client
+compatibility is not claimed.
 No external SDK dependency. Follows the same custom JSON-RPC pattern
 as agent_gov.
 
