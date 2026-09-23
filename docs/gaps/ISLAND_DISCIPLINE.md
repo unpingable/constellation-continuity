@@ -65,7 +65,7 @@ Cross-domain exchange is not a merge and not a federation. It is **typed, non-tr
 ```json
 {
   "id": "observatory-family",
-  "label": "ATProto observatory family",
+  "label": "Example observatory family",
   "purpose": "bridgeable",
   "bridge_policy": {
     "exports": ["decision", "lesson", "constraint"],
