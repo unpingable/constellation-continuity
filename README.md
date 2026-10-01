@@ -170,3 +170,7 @@ imported ≠ accepted     hash-chained ≠ ratified    receipt store ≠ relianc
 ## License
 
 Apache-2.0
+
+## Beta work planning
+
+See the [current beta work plan](docs/BETA-WORK.md) for owned requirements, exclusions, dependencies and GitHub issues. Plan publication does not start implementation or transfer qualification.
