@@ -171,7 +171,8 @@ No dispatch, model/agent selection, rankings/Elo, reputation/decay, optimization
 coalitions, voting, policy engine, scheduler changes, autonomous workflow mutation,
 new service, live classic consumer, or speculative multi-agent architecture.
 No new ontology, full-history summarizer, vector search, acceptance adjudicator,
-or MapSkew implementation. No merges, pushes, deployments or migrations.
+or MapSkew implementation. The spike handoff performed no merges, pushes,
+deployments or migrations; the subsequent authorized integration is recorded below.
 
 ## 6. Verdict
 
@@ -179,3 +180,30 @@ or MapSkew implementation. No merges, pushes, deployments or migrations.
 query addition and an evidence example provide immediate value. Salvage the
 separation of action, observation and later consequence. Importing classic code
 would duplicate working machinery and preserve a retired integration obligation.
+
+## Integration closeout — 2026-10-10 UTC
+
+The operator authorized integration after the spike. Commit
+`b74112d3d8b61398ceb33f829681fbdf5b3146d1` was checked against the independent
+review: all 16 changed files matched the reviewed SHA-256 identities, with no
+additional changes. It was fast-forwarded into `main` in
+`/data/git/constellation/constellation-continuity` and pushed to
+`unpingable/constellation-continuity`. The push also included the existing
+documentation-only ancestor `ccf70cb3d2aae67fd64c4ddd3a6f924da415cca1`, explicitly
+approved by the operator.
+
+Validation of the unchanged implementation: **377 tests passed**, plus independent
+scoped review. Initial test-environment failures were resolved by using temporary
+directories outside Git ancestry, the existing CLI on PATH, and the expected
+checkout basename; no product changes were needed for those failures.
+
+The redundant spike worktree was removed after confirming clean state, identical
+source custody in `main`, and no live consumers or storage dependencies. Historical
+review paths remain in the original receipts; their exact source files are now
+available in the primary checkout. Integration and custody are recorded in
+`.lanes/continuity-salvage/3a78d91f-2d44-4c07-b420-4da62bc25f6a/INTEGRATION.json`
+beneath the shared `/data/git` registry. Test logs, the specimen database, and the
+independent review remain there or at their cited registry paths.
+
+The spike is closed. No follow-up lane, architecture work, or supervisor workflow
+project is opened by this result.
