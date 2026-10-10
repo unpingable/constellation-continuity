@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/unpingable/agent_governor",
+  "revision": "df61549a5e9a0dcc63ebe21efc90bd8958f64123",
+  "classification": "Historical checked-in CD2 specimen, copied byte-for-byte; historical claims not independently revalidated.",
+  "files": {
+    "review_packet.json": {
+      "source_path": "docs/campaigns/conveyor-dogfood/specimens/cd2-state-index-roadmap-kind/review_packet.json",
+      "sha256": "0216f0f1a0fbdccaef515f66299020f4500f6a504808f5e2824e2c84ca719686"
+    },
+    "required_test_receipt.json": {
+      "source_path": "docs/campaigns/conveyor-dogfood/specimens/cd2-state-index-roadmap-kind/required_test_receipt.json",
+      "sha256": "fb9a74c51f0d57876657dbe16162efc3988582b5e1a5973416a1a58b42ceda99"
+    },
+    "validation.json": {
+      "source_path": "docs/campaigns/conveyor-dogfood/specimens/cd2-state-index-roadmap-kind/validation.json",
+      "sha256": "48f1a338b3aee32126279deac082cb5f8040e6f77ac0d57ff1d0b5297f547144"
+    },
+    "current_disposition.json": {
+      "source_path": "docs/campaigns/conveyor-dogfood/specimens/cd2-state-index-roadmap-kind/current_disposition.json",
+      "sha256": "91c8560bd0973cc5be6d11f9d2fb01e9ea536a9df6afe9231eb92f1d9cd2a4e3"
+    }
+  }
+}

@@ -34,6 +34,17 @@ def test_init(db_path: str) -> None:
     assert "initialized" in output
 
 
+def test_query_literal_text(db_path: str) -> None:
+    run(db_path, ["init"])
+    run_json(db_path, [
+        "observe", "--scope", "history", "--kind", "note", "--basis", "import",
+        "--content", '{"text":"storage retirement"}',
+    ])
+    result = run_json(db_path, ["query", "--text", "RETIREMENT", "--limit", "3"])
+    assert result["total"] == 1
+    assert run_json(db_path, ["query", "--text", "unrelated"])["total"] == 0
+
+
 def test_observe_and_get(db_path: str) -> None:
     run(db_path, ["init"])
 

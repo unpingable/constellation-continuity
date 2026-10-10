@@ -834,6 +834,7 @@ def cmd_query(args: argparse.Namespace) -> None:
 
     req = QueryMemoryRequest(
         scope=args.scope,
+        text=args.text,
         kind=args.kind,
         status=args.status,
         basis=args.basis,
@@ -1561,6 +1562,10 @@ def build_parser() -> argparse.ArgumentParser:
     # query
     p_qry = sub.add_parser("query", help="query memories")
     p_qry.add_argument("--scope", default=None)
+    p_qry.add_argument(
+        "--text", default=None,
+        help="literal substring of content JSON, ASCII case-insensitive (no ranking)",
+    )
     p_qry.add_argument("--kind", default=None, choices=[k.value for k in MemoryKind])
     p_qry.add_argument("--status", default=None, choices=[s.value for s in MemoryStatus])
     p_qry.add_argument("--basis", default=None, choices=[b.value for b in Basis])

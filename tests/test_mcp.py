@@ -29,6 +29,21 @@ def test_list_tools(server: ContinuityMCPServer) -> None:
     assert "memory_stats" in names
 
 
+def test_query_text_preserves_provenance(server: ContinuityMCPServer) -> None:
+    source = {"kind": "historical_receipt", "ref": "receipt:test", "note": "test fixture"}
+    server.call_tool("memory_observe", {
+        "scope": "history", "kind": "note", "basis": "import",
+        "content": {"text": "storage retirement"}, "source_refs": [source],
+    })
+    result = server.call_tool("memory_query", {"text": "RETIREMENT", "limit": 3})
+    assert result["total"] == 1
+    assert result["items"][0]["source_refs"] == [source]
+    assert result["items"][0]["status"] == "observed"
+    assert server.call_tool("memory_query", {"text": "unrelated"})["total"] == 0
+    schema = next(t for t in server.list_tools() if t["name"] == "memory_query")["inputSchema"]
+    assert schema["properties"]["text"]["maxLength"] == 256
+
+
 def test_observe(server: ContinuityMCPServer) -> None:
     result = server.call_tool("memory_observe", {
         "scope": "test",

@@ -67,7 +67,7 @@ For faster bootstrap, `contctl bootstrap` writes a minimal `.mcp.json` in the cu
 | `memory_revoke` | Retire a memory (status=revoked, stays as evidence) |
 | `memory_repair` | Narrow patch to content/source_refs/confidence on an existing memory |
 | `memory_import` | Cross-DB import with content-hash verification |
-| `memory_query` | Query memories by scope/kind/status/basis/reliance_class |
+| `memory_query` | Query memories by scope/kind/status/basis/reliance_class or literal content text; includes source refs |
 | `memory_query_latest` | Most recently updated memory matching (scope, kind) |
 | `memory_get` | Get a single memory by ID |
 | `memory_get_case` | Derived case bundle for a scope (investigation view) |
@@ -106,6 +106,7 @@ contctl revoke MEMORY_ID --reason "..." [--replacement NEW_MID]
 
 contctl get MEMORY_ID
 contctl query --scope SCOPE [--kind KIND] [--status STATUS] [--limit N]
+contctl query --text "retirement" --limit 3    # literal content JSON substring
 contctl latest --scope SCOPE --kind KIND        # most recent
 contctl explain MEMORY_ID [--evaluation-time ISO8601]   # lineage + rely_ok (replayable)
 contctl case SCOPE                              # case bundle for a scope
@@ -123,6 +124,14 @@ contctl observe-ref-continuity --subject SUBJECT \
 ```
 
 `--allow-island` is a global flag that opts into cross-project-shaped writes (scope=global / scope=workspace*) against a project-local store. Without it, such writes refuse — see [`gaps/ISLANDS_OF_CONTINUITY.md`](gaps/ISLANDS_OF_CONTINUITY.md).
+
+`query --text` (library/MCP: `text`) matches a literal substring of stored content
+JSON, including keys, with ASCII case-insensitivity. It composes with the other
+filters and uses the existing update-time order, not relevance ranking. `%` and
+`_` are literal. Blank or over-256-character search strings refuse. Row limits
+do not bound individual content size; use excerpts and source pointers for
+supervisor-facing summaries. The bounded historical-evidence example and its
+limitations are in [the salvage spike](AGENT_GOV_SALVAGE_SPIKE.md).
 
 ### Workspace commands
 

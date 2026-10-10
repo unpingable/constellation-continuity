@@ -354,7 +354,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "memory_query",
         "description": (
-            "Query memories by scope, kind, status, basis, or reliance class. "
+            "Query memories by scope, kind, status, basis, reliance class, or text. "
             "Returns matching memories ordered by most recently updated. "
             "Use this to check what the system already knows about a topic."
         ),
@@ -364,6 +364,15 @@ TOOLS: list[dict[str, Any]] = [
                 "scope": {
                     "type": "string",
                     "description": "Filter by scope.",
+                },
+                "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "description": (
+                        "Literal substring of content JSON (keys and values), "
+                        "ASCII case-insensitive. No wildcards or relevance ranking."
+                    ),
                 },
                 "kind": {
                     "type": "string",
@@ -822,6 +831,7 @@ class ContinuityMCPServer:
     def _handle_memory_query(self, args: dict[str, Any]) -> dict[str, Any]:
         req = QueryMemoryRequest(
             scope=args.get("scope"),
+            text=args.get("text"),
             kind=args.get("kind"),
             status=args.get("status"),
             basis=args.get("basis"),
@@ -847,6 +857,7 @@ class ContinuityMCPServer:
                     ),
                     "confidence": m.confidence,
                     "content": m.content,
+                    "source_refs": [s.model_dump(mode="json") for s in m.source_refs],
                     "created_at": str(m.created_at),
                     "updated_at": str(m.updated_at),
                 }

@@ -697,6 +697,9 @@ class ImportMemoryResponse(JsonModel):
 
 class QueryMemoryRequest(JsonModel):
     scope: str | None = Field(default=None, max_length=255)
+    # Literal substring of stored JSON (keys and values), ASCII case-insensitive.
+    # Retrieval only: neither relevance ranking nor a claim about outcomes.
+    text: str | None = Field(default=None, min_length=1, max_length=256)
     kind: MemoryKind | None = None
     status: MemoryStatus | None = None
     basis: Basis | None = None
@@ -704,6 +707,13 @@ class QueryMemoryRequest(JsonModel):
     include_expired: bool = False
     limit: int = Field(default=100, ge=1, le=1000)
     offset: int = Field(default=0, ge=0)
+
+    @field_validator("text")
+    @classmethod
+    def validate_text(cls, value: str | None) -> str | None:
+        if value is not None and not value.strip():
+            raise ValueError("text must contain a non-whitespace character")
+        return value
 
 
 class QueryMemoryResponse(JsonModel):

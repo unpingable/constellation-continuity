@@ -574,6 +574,11 @@ class SQLiteStore:
         if req.scope is not None:
             where.append("scope = ?")
             params.append(req.scope)
+        if req.text is not None:
+            # instr keeps %, _ and SQL-looking input literal. SQLite lower
+            # folds ASCII only; search includes JSON keys as well as values.
+            where.append("instr(lower(content_json), lower(?)) > 0")
+            params.append(req.text)
         if req.kind is not None:
             where.append("kind = ?")
             params.append(str(req.kind))
